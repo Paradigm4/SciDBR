@@ -28,6 +28,8 @@
   options(scidb.default.value=NA)
 # Maximum allowed elements in an array return result
   options(scidb.max.array.elements=100000000)
+# Should we be indexing at one (native R) or at zero (native SciDB)
+  options(scidb.index.at.one=TRUE)
 }
 
 .onUnload = function(libpath)
@@ -35,6 +37,7 @@
   options(scidb.index.sequence.limit=c())
   options(scidb.default.value=c())
   options(scidb.max.array.elements=c())
+  options(scidb.index.at.one=c())
 }
 
 # scidb array object type map. We don't yet support strings in scidb array

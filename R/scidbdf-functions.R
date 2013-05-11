@@ -60,6 +60,13 @@ dimnames.scidbdf = function(x)
 # i shall contain a list of requested index values
   E = parent.frame()
   i = lapply(1:length(M), function(j) tryCatch(eval(M[j][[1]],E),error=function(e)c()))
+# Adjust the indices from one-indexing to zero-indexing.
+  if (options()$scidb.index.at.one) {
+    i <- lapply(i, 
+      FUN=function(x) {
+        if (is.numeric(x)) x-1 else x
+      })
+  }
 # User wants this materialized to R...
   if(all(sapply(i,is.null)))
     if(iterative)
