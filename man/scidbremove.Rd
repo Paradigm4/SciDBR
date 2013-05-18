@@ -8,7 +8,7 @@ Remove an array.
 Remove (delete) an array from SciDB.
 }
 \usage{
-scidbremove(x, error = stop)
+scidbremove(x, error = warning)
 }
 \arguments{
   \item{x}{

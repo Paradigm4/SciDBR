@@ -22,14 +22,20 @@
 
 .onLoad = function(libname,pkgname)
 {
-# Maximum allowed sequential index limit (for larger, use between)
-  options(scidb.index.sequence.limit=1000000)
-# Default empty fill-in value
-  options(scidb.default.value=NA)
-# Maximum allowed elements in an array return result
-  options(scidb.max.array.elements=100000000)
-# Should we be indexing at one (native R) or at zero (native SciDB)
-  options(scidb.index.at.one=TRUE)
+  op <- options()
+  op.devtools <- list(
+    # Maximum allowed sequential index limit (for larger, use between)
+    scidb.index.sequence.limit=1000000,
+    # Default empty fill-in value
+    scidb.default.value=NA,
+    # Maximum allowed elements in an array return result
+    scidb.max.array.elements=100000000,
+    # Should we be indexing at one (native R) or at zero (native SciDB)
+    scidb.index.at.one=TRUE
+  )
+  toset <- !(names(op.devtools) %in% names(op))
+  if(any(toset)) options(op.devtools[toset])    
+  invisible()
 }
 
 .onUnload = function(libpath)
