@@ -235,7 +235,7 @@ scidbquery = function(query, afl=TRUE, async=FALSE, save=NULL, release=1, sessio
 # error (function): error handler. Use stop or warn, for example.
 # Output:
 # null
-scidbremove = function(x, error=stop)
+scidbremove = function(x, error=warning)
 {
   if(inherits(x,"scidb")) x = x@name
   if(!inherits(x,"character")) stop("Invalid argument. Perhaps you meant to quote the variable name(s)?")
@@ -245,7 +245,7 @@ scidbremove = function(x, error=stop)
   }
   invisible()
 }
-scidbrm = function(x,error=stop) scidbremove(x,error)
+scidbrm = function(x,error=warning) scidbremove(x,error)
 
 # df2scidb: User function to send a data frame to SciDB
 # Returns a scidbdf object
