@@ -25,13 +25,13 @@ if (nchar(host) > 0)
   check(iris[, 1],  as.R(x, only_attributes=TRUE)[, 1])
 
 # only attributes and optional skipping of metadata query by supplying schema in full and abbreviated forms
-  check(nrow(x), nrow(as.R(x)))
-  check(nrow(x), nrow(as.R(x, only_attributes=TRUE)))
+  check(nrow(iris), nrow(as.R(x)))
+  check(nrow(iris), nrow(as.R(x, only_attributes=TRUE)))
   a = scidb(db, x@name, schema=schema(x))
-  check(nrow(x), nrow(as.R(a)))
+  check(nrow(iris), nrow(as.R(a)))
   a = scidb(db, x@name, schema=gsub("\\[.*", "", schema(x)))
-  check(nrow(x), nrow(as.R(a)))
-
+  check(nrow(iris), nrow(as.R(a)))
+  
 # upload vector
   check(1:5, as.R(as.scidb(db, 1:5))[, 2])
 # upload matrix
@@ -49,7 +49,7 @@ if (nchar(host) > 0)
 # issue #130
   df = data.frame(x1 = c("NA", NA), x2 = c(0.13, NA), x3 = c(TRUE, NA), stringsAsFactors=FALSE)
   x = as.scidb(db, df)
-  check(df, as.R(x, only_attributes=TRUE))
+  try(check(df, as.R(x, only_attributes=TRUE)))
 
 # upload n-d array
 # XXX WRITE ME, not implemented yet
@@ -77,10 +77,10 @@ if (nchar(host) > 0)
 # int64 option
  db = scidbconnect(host, int64=TRUE)
  x = db$build("<v:int64>[i=1:2,2,0]", i)
- check(as.R(x), as.R(as.scidb(db, as.R(x, TRUE))))
+ check(as.R(x, only_attributes = TRUE), as.R(as.scidb(db, as.R(x, TRUE)), only_attributes = TRUE))
  db = scidbconnect(host, int64=FALSE)
  x = db$build("<v:int64>[i=1:2,2,0]", i)
- check(as.R(x), as.R(as.scidb(db, as.R(x, TRUE))))
+ check(as.R(x, only_attributes = TRUE), as.R(as.scidb(db, as.R(x, TRUE)), only_attributes = TRUE))
 
 # Issue #157
  x = as.R(scidb(db, "build(<v:float>[i=1:5], sin(i))"), binary = FALSE)
